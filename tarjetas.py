@@ -41,8 +41,26 @@ class Carta:
         self.valor = valor
         self.figura = figura
 
-    def __str__( self )
+    def __str__( self ):
     print(str(valor) + "-" + figura)
+
+class Baraja:
+    dict_cartas = None #diccionario de cartas (cara:valor)
+    lista_figuras = None #lista de figuras
+    lista_cartas = None #lista de cartas
+    lista_jugadores = None #lista de jugadores
+
+    def __init__( self ):
+        dict_cartas = dict()
+        #lista_figuras =
+        #lista_cartas = 
+        #lista_jugadores =
+
+    def genera_mano( self ):
+
+    def guarda_jugador( self ):
+
+
 
 
 
