@@ -47,4 +47,4 @@ Baraja
 
 También es necesario el archivo pares.py, que importará la librería tarjetas.py.
 
-![Criterios de Evaluacion](/Criterios_de_evaluacion_BF.PNG)
+![Criterios de Evaluacion](/Criterios_de_evaluacion_BF.png)
