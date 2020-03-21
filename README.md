@@ -9,23 +9,23 @@ Y el programa repartirá al azar la mano del jugador y la del al menos otro juga
 
    ./pares.py -j yo -j tu -m 5
    
-   yo 
-   ---------- 
-   10-P 
-   3-P 
-   4-T 
-   7-P 
-   K-C
+yo 
+---------- 
+10-P 
+3-P 
+4-T 
+7-P 
+K-C
    
-   tu 
-   ---------- 
-   10-C 
-   2-T 
-   4-D 
-   5-D 
-   5-T
+tu 
+---------- 
+10-C 
+2-T 
+4-D 
+5-D 
+5-T
 
-   jugador: tu gano con 1 par
+jugador: tu gano con 1 par
 
 Muy importante: un par de 10s le gana a un par de 5s. Dos pares le ganan a 1 par.
 
