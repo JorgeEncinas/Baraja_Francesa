@@ -82,7 +82,7 @@ class Baraja:
             print("Se ha seleccionado un número de cartas para las cuales \n \
             no se puede repartir la mano equitativamente. \n \
             Se reducirá la cantidad de cartas al número máximo posible.")
-            numero = math.floor(52/len(self.lista_jugadores)):
+            numero = math.floor(52/len(self.lista_jugadores))
             for i in range ( 1, numero+1 ):
                 mano.append( self.lista_cartas.pop() )
         return mano
