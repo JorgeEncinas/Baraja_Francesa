@@ -33,15 +33,18 @@ La baraja francesa consta de 52 cartas distribuidas en 4 palos (corazones, diama
 
 Es necesario hacer un archivo tarjetas.py el cual contendrá 3 clases:
 
-Jugador 
+Jugador
+-----------
 (atributos: nombre (str), mano (lista) ) 
 (métodos: __init__, despliega_mano() )
 
-Carta 
+Carta
+----------
 (atributos: valor (int), figura (str)) 
 (métodos: __init__, __str__ )
 
-Baraja 
+Baraja
+----------
 (atributos: diccionario de cartas ( cara:valor ), figuras (Corazones, Pinos, Tréboles, Diamantes), lista de cartas (52 en total), lista de jugadores) 
 (métodos: __init__, genera_mano, guarda_jugador)
 
