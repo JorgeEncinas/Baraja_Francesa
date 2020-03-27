@@ -99,9 +99,10 @@ def main( jugadores, numero_cartas ):
   generar_manos( jugadores, numero_cartas, baraja )
   ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
   print("El ganador es {}!".format(ganador.nombre))
+  print(motivoVictoria(ganador.mano))
   if humillar == True and ganador.nombre == "AM":
     print(string_humillar)
-  print(motivoVictoria(ganador.mano))
+  
   
 
 if __name__=="__main__":
