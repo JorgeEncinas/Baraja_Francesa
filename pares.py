@@ -78,7 +78,7 @@ def motivoVictoria(mano):
     p="par"
   if tercias=1:
     t="tercia"
-  motivo="Gano con "+pares+" "+p+" y "+tercias+" "+t+"."
+  motivo="Gano con {} {} y {} {}.".format(pares,p,tercias,t)
   return motivo
 
 #-------------------------------------------------------
