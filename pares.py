@@ -52,6 +52,8 @@ def comparar_manos( jugadores, dict_cartas ):
       if valor > 1 and valor < 4:
         suma_cartas += (llave*valor)
     print("Puntaje: {} \n".format(suma_cartas))
+    if suma_cartas == mano_ganadora:
+      ganador = None
     if suma_cartas > mano_ganadora:
       ganador = jugador
       mano_ganadora = suma_cartas
@@ -94,10 +96,13 @@ def main( jugadores, numero_cartas ):
     numero_cartas = math.floor(52/(len(jugadores)))
   generar_manos( jugadores, numero_cartas, baraja )
   ganador, dict_ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
-  print("El ganador es {}!".format(ganador.nombre))
-  print(motivoVictoria(dict_ganador))
-  if humillar == True and ganador.nombre == "AM":
-    print(string_humillar)
+  if ganador is None:
+    print("Empate")
+  else:
+    print("El ganador es {}!".format(ganador.nombre))
+    print(motivoVictoria(dict_ganador))
+    if humillar == True and ganador.nombre == "AM":
+      print(string_humillar)
   
   
 
