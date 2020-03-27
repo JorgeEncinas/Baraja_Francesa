@@ -19,35 +19,41 @@
 
 import argparse
 import tarjetas
+import math
 
 #-------------------------------------------------------
 #2 funciones
 
-def generar_manos( jugadores ):
+def generar_manos( jugadores, numero_cartas, baraja ):
   for nombre in jugadores:
     jugador = tarjetas.Jugador( nombre )
-    jugador.mano = baraja.genera_mano
+    jugador.mano = baraja.genera_mano( numero_cartas )
     baraja.guarda_jugador( jugador )
 
-def obten_valor( carta, dict_cartas ):
-  temp = carta.split("-")
-  llave = temp[0]
-  valor_carta = dict_cartas.get(llave)
-  return valor_carta
-
 def comparar_manos( jugadores, dict_cartas ):
-  ganador = ""
+  ganador = "Algo está saliendo mal xd"
   mano_ganadora = -1
   for jugador in jugadores:
     print(jugador.nombre)
     print("------------")
     jugador.despliega_mano()
+    print("\n")
     suma_cartas = 0
+    dict_mano = dict()
     for carta in jugador.mano:
-      valor_carta = obten_valor( carta, dict_cartas )
-      suma_cartas += valor_carta
+      valor_carta = carta.valor
+      if valor_carta in dict_mano.keys():
+        dict_mano[valor_carta] += 1
+      else:
+        dict_mano[valor_carta] = 1
+    print(dict_mano)
+    for llave, valor in dict_mano.items():
+      if valor > 1 and valor < 4:
+        suma_cartas += (llave*valor)
+    print("{} \n".format(suma_cartas))
     if suma_cartas > mano_ganadora:
       ganador = jugador.nombre
+      mano_ganadora = suma_cartas
   return ganador
 
 #-------------------------------------------------------
@@ -55,14 +61,19 @@ def comparar_manos( jugadores, dict_cartas ):
 
 def main( jugadores, numero_cartas ):
   baraja = tarjetas.Baraja()
+  if numero_cartas > math.floor(52/(len(jugadores))):
+    print("Se ha seleccionado un número de cartas para las cuales \n \
+    no se puede repartir la mano equitativamente. \n \
+    Se reducirá la cantidad de cartas al número máximo posible.")
+    numero_cartas = math.floor(52/(len(jugadores)))
   humillar = False
   string_humillar = "AM: Eres patético, humano."
   if len( jugadores ) < 2:
     jugadores.append("AM")
     humillar = True
-  generar_manos( baraja.lista_jugadores )
-  ganador = comparar_manos(baraja.lista_jugadores, baraja.dict_cartas )
-  print(ganador)
+  generar_manos( jugadores, numero_cartas, baraja )
+  ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
+  print("El ganador es {}!".format(ganador))
   if humillar == True and ganador == "AM":
     print(string_humillar)
   
