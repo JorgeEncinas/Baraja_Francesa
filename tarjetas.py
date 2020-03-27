@@ -9,7 +9,6 @@
 #
 
 import random
-import math
 
 #-------------------------------------------------------
 #2 clases
@@ -26,15 +25,18 @@ class Carta:
     
     def __str__( self ):
         #Muestra la carta individual, asigna String a numericos específicos, (1=as, 12=reina, etc.)
-        if( self.valor == 20 ):
-            self.valor = "As"
-        elif( self.valor == 11 ):
-            self.valor = "Paje"
-        elif( self.valor == 12 ):
-            self.valor = "Reina"
-        elif( self.valor == 13 ):
-            self.valor = "Rey"
-        return ( "{} de {}".format( self.valor, self.figura ) )
+        if ( self.valor > 11):
+            if( self.valor == 20 ):
+                temp_str = "As"
+            elif( self.valor == 11 ):
+                temp_str = "Paje"
+            elif( self.valor == 12 ):
+                temp_str = "Reina"
+            elif( self.valor == 13 ):
+                temp_str = "Rey"
+            return ( "{}-{}".format( temp_str, self.figura ) )
+        else:
+            return ( "{}-{}".format( self.valor, self.figura ) )
         
 
 class Baraja:
@@ -51,7 +53,7 @@ class Baraja:
         self.genera_dict()
 
     def genera_dict( self ):
-        for valor in range (2, 10):
+        for valor in range (2, 11):
             self.dict_cartas[str(valor)] = valor
         self.dict_cartas["Paje"] = 11
         self.dict_cartas["Reina"] = 12
@@ -74,21 +76,13 @@ class Baraja:
 
     def genera_mano( self, numero ):
         # Genera una lista de cartas dependiendo del numero indicado
-        mano = []
-        if numero <= math.floor(52/len(self.lista_jugadores)):    
-            for i in range( 1, numero+1 ):
-                mano.append( self.lista_cartas.pop() )
-        else:
-            print("Se ha seleccionado un número de cartas para las cuales \n \
-            no se puede repartir la mano equitativamente. \n \
-            Se reducirá la cantidad de cartas al número máximo posible.")
-            numero = math.floor(52/len(self.lista_jugadores))
-            for i in range ( 1, numero+1 ):
-                mano.append( self.lista_cartas.pop() )
+        mano = []   
+        for i in range( 1, numero+1 ):
+            mano.append( self.lista_cartas.pop() )
         return mano
 
     def guarda_jugador( self, jugador ):
-        lista_jugadores.append( jugador )
+        self.lista_jugadores.append( jugador )
 
 class Jugador:
     nombre = None #str
@@ -96,15 +90,11 @@ class Jugador:
 
     def __init__( self, nombre ):
         self.nombre = nombre
+        mano = []
 
     def despliega_mano( self ):
         #Despliega la mano del jugador
         for carta in self.mano:
             print(carta)
-
-#deck=Baraja()
-#manita=deck.generaMano(5)
-#alex = Jugador("alex")
-#alex.despliegaMano(manita)
 
 
