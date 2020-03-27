@@ -51,7 +51,7 @@ def comparar_manos( jugadores, dict_cartas ):
     for llave, valor in dict_mano.items():
       if valor > 1 and valor < 4:
         suma_cartas += (llave*valor)
-    print("{} \n".format(suma_cartas))
+    print("Puntaje: {} \n".format(suma_cartas))
     if suma_cartas > mano_ganadora:
       ganador = jugador
       mano_ganadora = suma_cartas
