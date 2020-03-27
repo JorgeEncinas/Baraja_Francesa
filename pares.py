@@ -31,8 +31,9 @@ def generar_manos( jugadores, numero_cartas, baraja ):
     baraja.guarda_jugador( jugador )
 
 def comparar_manos( jugadores, dict_cartas ):
-  ganador = "Algo está saliendo mal xd"
+  ganador = "Nadie"
   mano_ganadora = -1
+  dict_ganador = None
   for jugador in jugadores:
     print(jugador.nombre)
     print("------------")
@@ -42,7 +43,7 @@ def comparar_manos( jugadores, dict_cartas ):
     dict_mano = dict()
     for carta in jugador.mano:
       valor_carta = carta.valor
-      if valor_carta in dict_mano.keys():
+      if valor_carta in dict_mano:
         dict_mano[valor_carta] += 1
       else:
         dict_mano[valor_carta] = 1
@@ -54,31 +55,26 @@ def comparar_manos( jugadores, dict_cartas ):
     if suma_cartas > mano_ganadora:
       ganador = jugador
       mano_ganadora = suma_cartas
-  return ganador
+      dict_ganador = dict_mano
+  return ganador, dict_ganador
 
-def motivoVictoria(mano):
-  '''Toma la mano ganadora y hace un diccionario de valores, el cual mostrara si se repitieron valores (para comprobar que haya pares) y al final regresa un string que revela el motivo por el que gano. Ej: "Gano con un par"'''
+def motivoVictoria( dict_ganador ):
+  '''Toma la mano ganadora y regresa un string que revela el motivo por el que gano. Ej: "Gano con un par"'''
   motivo=""
-  dv=dict()
   pares=0
   tercias=0
   p="pares"
   t="tercias"
-  for carta in mano:
-    if carta.valor in dv:
-      dv[carta.valor]+=1
-    else:
-      dv[carta.valor]=1
-  for k,v in dv.items():
-    if v=2:
+  for k,v in dict_ganador.items():
+    if v==2:
       pares+=1
-    if v=3:
+    if v==3:
       tercias+=1
-  if pares=1:
+  if pares==1:
     p="par"
-  if tercias=1:
+  if tercias==1:
     t="tercia"
-  motivo="Gano con "+pares+" "+p+" y "+tercias+" "+t+"."
+  motivo = "Ganó con {} {} y {} {}.".format(pares, p, tercias, t) 
   return motivo
 
 #-------------------------------------------------------
@@ -97,9 +93,9 @@ def main( jugadores, numero_cartas ):
     Se reducirá la cantidad de cartas al número máximo posible.")
     numero_cartas = math.floor(52/(len(jugadores)))
   generar_manos( jugadores, numero_cartas, baraja )
-  ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
+  ganador, dict_ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
   print("El ganador es {}!".format(ganador.nombre))
-  print(motivoVictoria(ganador.mano))
+  print(motivoVictoria(dict_ganador))
   if humillar == True and ganador.nombre == "AM":
     print(string_humillar)
   
