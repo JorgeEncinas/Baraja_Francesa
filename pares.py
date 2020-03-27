@@ -52,9 +52,34 @@ def comparar_manos( jugadores, dict_cartas ):
         suma_cartas += (llave*valor)
     print("{} \n".format(suma_cartas))
     if suma_cartas > mano_ganadora:
-      ganador = jugador.nombre
+      ganador = jugador
       mano_ganadora = suma_cartas
   return ganador
+
+def motivoVictoria(mano):
+  '''Toma la mano ganadora y hace un diccionario de valores, el cual mostrara si se repitieron valores (para comprobar que haya pares) y al final regresa un string que revela el motivo por el que gano. Ej: "Gano con un par"'''
+  motivo=""
+  dv=dict()
+  pares=0
+  tercias=0
+  p="pares"
+  t="tercias"
+  for carta in mano:
+    if carta.valor in dv:
+      dv[carta.valor]+=1
+    else:
+      dv[carta.valor]=1
+  for k,v in dv.items():
+    if v=2:
+      pares+=1
+    if v=3:
+      tercias+=1
+  if pares=1:
+    p="par"
+  if tercias=1:
+    t="tercia"
+  motivo="Gano con "+pares+" "+p+" y "+tercias+" "+t+"."
+  return motivo
 
 #-------------------------------------------------------
 #3 ejecucion de main
@@ -73,9 +98,10 @@ def main( jugadores, numero_cartas ):
     humillar = True
   generar_manos( jugadores, numero_cartas, baraja )
   ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
-  print("El ganador es {}!".format(ganador))
+  print("El ganador es {}!".format(ganador.nombre))
   if humillar == True and ganador == "AM":
     print(string_humillar)
+  print(motivoVictoria(ganador.mano))
   
 
 if __name__=="__main__":
