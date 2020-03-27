@@ -61,16 +61,16 @@ def comparar_manos( jugadores, dict_cartas ):
 
 def main( jugadores, numero_cartas ):
   baraja = tarjetas.Baraja()
-  if numero_cartas > math.floor(52/(len(jugadores))):
-    print("Se ha seleccionado un número de cartas para las cuales \n \
-    no se puede repartir la mano equitativamente. \n \
-    Se reducirá la cantidad de cartas al número máximo posible.")
-    numero_cartas = math.floor(52/(len(jugadores)))
   humillar = False
   string_humillar = "AM: Eres patético, humano."
   if len( jugadores ) < 2:
     jugadores.append("AM")
     humillar = True
+  if numero_cartas > math.floor(52/(len(jugadores))):
+    print("Se ha seleccionado un número de cartas para las cuales \n \
+    no se puede repartir la mano equitativamente. \n \
+    Se reducirá la cantidad de cartas al número máximo posible.")
+    numero_cartas = math.floor(52/(len(jugadores)))
   generar_manos( jugadores, numero_cartas, baraja )
   ganador = comparar_manos( baraja.lista_jugadores, baraja.dict_cartas )
   print("El ganador es {}!".format(ganador))
@@ -82,7 +82,7 @@ if __name__=="__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('-j','--jugador',dest='jugador',help="nombre del jugador", \
   	                  action="append", required=True)
-  parser.add_argument('-m','--mano',dest='mano',help="cantidad de cartas en mano", required=False, default=5)
+  parser.add_argument('-m','--mano',dest='mano',help="cantidad de cartas en mano", type=int, required=False, default=5)
   args = parser.parse_args()
   jugadores = args.jugador
   numero_cartas = args.mano
