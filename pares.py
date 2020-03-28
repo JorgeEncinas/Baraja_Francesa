@@ -45,7 +45,6 @@ def comparar_manos( jugadores, dict_cartas ):
     print(jugador.nombre)
     print("------------")
     jugador.despliega_mano()    #Mostramos sus cartas
-    print("\n")
     suma_cartas = 0
     dict_mano = dict()
     for carta in jugador.mano:  #En un diccionario vamos poniendo cuántas de cada valor hay
@@ -54,7 +53,6 @@ def comparar_manos( jugadores, dict_cartas ):
         dict_mano[valor_carta] += 1
       else:
         dict_mano[valor_carta] = 1
-    print(dict_mano)
     cuenta_pares = 0            #Cuenta local de pares y tercias en la mano de un jugador
     cuenta_tercias = 0        
     par_alto = 0                #Cuenta del par más alto de la mano de un jugador
@@ -142,7 +140,7 @@ def motivoVictoria( dt ):
   if tercias==1:
     t="tercia"
   if pares == 0 and tercias == 0:
-    motivo = "Ganó por su carta más alta: {}".format(cma)
+    motivo = "Ganó por su carta más alta con {} puntos!".format(cma)
   else:
     motivo = "Ganó con {} {} y {} {}.".format(pares, p, tercias, t) 
   return motivo
