@@ -32,9 +32,9 @@ def generar_manos( jugadores, numero_cartas, baraja ):
 
 def comparar_manos( jugadores, dict_cartas ):
   ganador = None          #Ganador se asigna aquí
-  mano_ganadora = -1      #Se compara la mano ganadora en este
+  mano_ganadora = 0      #Se compara la mano ganadora en este
   dict_ganador = None     #Con este se devuelve la mano del ganador
-  carta_mas_alta = -1     #En caso de que no tengan pares ni tercias, se almacena aquí la carta más alta
+  carta_mas_alta = 0     #En caso de que no tengan pares ni tercias, se almacena aquí la carta más alta
   jg_cma = None           #Se almacena el jugador que tiene la carta más alta
   lista_empate = []       #En caso de empate se almacenan los jugadores con empate aquó
   cpg = 0                 #Almacena la cantidad de pares máxima
@@ -84,9 +84,9 @@ def comparar_manos( jugadores, dict_cartas ):
         jg_cma = jugador                        #Y el ganador en ese caso sería este jugador
         dict_ganador = dict_mano                #Guardemos su diccionario para después
     print("Puntaje: {} \n".format(suma_puntaje))
-    if suma_cartas == mano_ganadora:            #Si la suma de cartas es igual a la mano ganadora...
+    if suma_cartas == mano_ganadora:                                        #Si la suma de cartas es igual a la mano ganadora...
       lista_empate.append( [jugador, par_alto, tercia_alta, dict_mano] )    #Vamos a compararlas, guardala en la lista
-      empate = True                             #Hay un empate
+      empate = True                                                         #Hay un empate
     elif suma_cartas > mano_ganadora:         #Si la suma de cartas supera a la de la mano ganadora...
       ganador = jugador                       #Este es el que va ganando
       max_puntaje = suma_puntaje              #Su puntaje es el máximo hasta ahora
@@ -100,7 +100,7 @@ def comparar_manos( jugadores, dict_cartas ):
     if mano_ganadora == 0:      #Y nadie va ganando...
       ganador = jg_cma          #El de la carta más alta gana
     else:                       #Si hay más de uno con matches
-      ganador, dict_ganador = comparar_empates( lista_empate, cpg, ctg )   #Compara las matches.
+      ganador, dict_ganador = comparar_empates( lista_empate, cpg, ctg, jg_cma )   #Compara las matches.
   return ganador, dict_ganador
 
 def comparar_empates( lista_empate, cpg, ctg ):
@@ -114,12 +114,26 @@ def comparar_empates( lista_empate, cpg, ctg ):
         par_alto = lista[1]
         ganador = lista[0]
         dict_ganador = lista[3]
-  else:                  #Cantidad de Tercias >= Cantidad de Pares, tienen prioridad las tercias
+  elif cpg < ctg:                  #Cantidad de Tercias >= Cantidad de Pares, tienen prioridad las tercias
     for lista in lista_empate:
       if lista[2] > tercia_alta:
         tercia_alta = lista[1]
         ganador = lista[0]
         dict_ganador = lista[3]
+  else:
+    lista_listas = []
+    lista_dif = []
+    for lista in lista_empate:
+      lista_cartas = []
+      for k, v in lista[3]:
+        lista_cartas.append(k)
+      lista_listas.append(lista_cartas.sort(reverse=True))
+    for i, lista in enumerate(lista_listas):
+      for j, lista2 in enumerate(lista_listas[1:]):
+        
+
+
+
   return ganador, dict_ganador
 
 def motivoVictoria( dt ):
