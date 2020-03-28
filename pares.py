@@ -77,10 +77,6 @@ def comparar_manos( jugadores, dict_cartas ):
         suma_puntaje += valor*4                 #Obtenemos su puntaje
         if llave > par_alto:                    #Si su llave es el par más alto...
           par_alto = llave                      #Guárdalo
-      if llave > carta_mas_alta and cuenta_pares == 0 and cuenta_tercias == 0: #Si esta carta es la más alta de la mano hasta ahora...
-        carta_mas_alta = llave                  #Guárdala en caso de que no tenga ni pares ni tercias
-        jg_cma = jugador                        #Y el ganador en ese caso sería este jugador
-        dict_ganador = dict_mano                #Guardemos su diccionario para después
     print("Puntaje: {} \n".format(suma_puntaje))
     if suma_cartas == mano_ganadora:            #Si la suma de cartas es igual a la mano ganadora...
       lista_empate.append( [jugador, par_alto, tercia_alta, dict_mano] )    #Vamos a compararlas, guardala en la lista
@@ -96,7 +92,7 @@ def comparar_manos( jugadores, dict_cartas ):
       empate = False                          #Si antes había empate, ahora no.
   if empate == True:              #Si hay empate
     if mano_ganadora == 0:      #Y nadie va ganando...
-      ganador = jg_cma          #El de la carta más alta gana
+      ganador = None            #Empate 
     else:                       #Si hay más de uno con matches
       ganador, dict_ganador = comparar_empates( lista_empate, cpg, ctg )   #Compara las matches.
   return ganador, dict_ganador
@@ -140,7 +136,7 @@ def motivoVictoria( dt ):
   if tercias==1:
     t="tercia"
   if pares == 0 and tercias == 0:
-    motivo = "Ganó por su carta más alta con {} puntos!".format(cma)
+    motivo = "Mejor suerte para la próxima!"
   else:
     motivo = "Ganó con {} {} y {} {}.".format(pares, p, tercias, t) 
   return motivo
