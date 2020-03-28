@@ -6,6 +6,23 @@
 # Fecha: 20 de Marzo de 2020
 #
 # Descripción de Modo de uso:
+#   Carta:
+#       Crear una instancia: carta(figura, valor)
+#       __str__(): da formato al imprimir las cartas
+#
+#   Baraja:
+#       Crear una instancia: baraja()
+#     Métodos:      
+#       genera_dict(): Genera el diccionario Cara:valor al inicializarse
+#       genera_deck(): Genera la baraja al inicializarse
+#       revolver(): Revuelve el deck generado al inicializarse
+#       genera_mano( numero ): Te "da" el número de cartas que le pidas
+#       guarda_jugador( jugador ): Guarda en la lista_jugador de la Baraja una instancia de objeto Jugador
+#
+#   Jugador:
+#       jugador( nombre ): inicializa y asigna el nombre al jugador
+#     Métodos:
+#       despliega_mano(): imprime las cartas
 #
 
 import random
@@ -37,7 +54,6 @@ class Carta:
             return ( "{}-{}".format( temp_str, self.figura ) )
         else:
             return ( "{}-{}".format( self.valor, self.figura ) )
-        
 
 class Baraja:
     dict_cartas = None #cara:valor
