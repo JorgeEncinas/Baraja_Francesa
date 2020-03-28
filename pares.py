@@ -31,76 +31,76 @@ def generar_manos( jugadores, numero_cartas, baraja ):
     baraja.guarda_jugador( jugador )
 
 def comparar_manos( jugadores, dict_cartas ):
-  ganador = None
-  mano_ganadora = -1
-  dict_ganador = None
-  carta_mas_alta = -1
-  jg_cma = None
-  lista_empate = []
-  cpg = 0
-  ctg = 0
-  empate = False
-  max_puntaje = 0
-  for jugador in jugadores:
+  ganador = None          #Ganador se asigna aquí
+  mano_ganadora = -1      #Se compara la mano ganadora en este
+  dict_ganador = None     #Con este se devuelve la mano del ganador
+  carta_mas_alta = -1     #En caso de que no tengan pares ni tercias, se almacena aquí la carta más alta
+  jg_cma = None           #Se almacena el jugador que tiene la carta más alta
+  lista_empate = []       #En caso de empate se almacenan los jugadores con empate aquó
+  cpg = 0                 #Almacena la cantidad de pares máxima
+  ctg = 0                 #Almacena la cantidad de tercias máxima
+  empate = False          #Boolean de si hay empate
+  max_puntaje = 0         #Máximo puntaje alcanzado
+  for jugador in jugadores:     #El proceso se hace por cada jugador
     print(jugador.nombre)
     print("------------")
-    jugador.despliega_mano()
+    jugador.despliega_mano()    #Mostramos sus cartas
     print("\n")
     suma_cartas = 0
     dict_mano = dict()
-    for carta in jugador.mano:
+    for carta in jugador.mano:  #En un diccionario vamos poniendo cuántas de cada valor hay
       valor_carta = carta.valor
       if valor_carta in dict_mano:
         dict_mano[valor_carta] += 1
       else:
         dict_mano[valor_carta] = 1
     print(dict_mano)
-    cuenta_pares = 0
-    cuenta_tercias = 0
-    par_alto = 0
-    tercia_alta = 0
-    suma_puntaje = 0
-    for llave, valor in dict_mano.items():
-      if valor == 2:
-        suma_cartas += 2
-        suma_puntaje += llave*2
-        cuenta_pares += 1
-        if llave > par_alto: 
-          par_alto = llave
-      if valor == 3:
-        suma_cartas += 3
-        cuenta_tercias += 1
-        suma_puntaje += llave*3
-        if llave > tercia_alta: 
-          tercia_alta = llave
-      if valor == 4:
-        suma_cartas += 4
-        cuenta_pares += 2
-        suma_puntaje += valor*4
-        if llave > par_alto: 
-          par_alto = llave
-      if llave > carta_mas_alta:
-        carta_mas_alta = llave
-        jg_cma = jugador
-        dict_ganador = dict_mano
+    cuenta_pares = 0            #Cuenta local de pares y tercias en la mano de un jugador
+    cuenta_tercias = 0        
+    par_alto = 0                #Cuenta del par más alto de la mano de un jugador
+    tercia_alta = 0             #Cuenta de la tercia más alta de la mano de un jugador
+    suma_puntaje = 0            #Sumamos el puntaje del jugador
+    for llave, valor in dict_mano.items():      #Por cada valor único en la mano del jugador...
+      if valor == 2:                          #Si es un par...
+        suma_cartas += 2                        #Tiene dos cartas
+        suma_puntaje += llave*2                 #Sacamos el puntaje
+        cuenta_pares += 1                       #Contamos que lleva un par
+        if llave > par_alto:                    #Si es su par de valor más alto...
+          par_alto = llave                      #Guárdalo
+      if valor == 3:                          #Si es una tercia...
+        suma_cartas += 3                        #Tiene tres cartas
+        cuenta_tercias += 1                     #Contamos que lleva una tercia
+        suma_puntaje += llave*3                 #Sacamos el puntaje
+        if llave > tercia_alta:                 #Si es la tercia de valor más alto...
+          tercia_alta = llave                   #Guárdalo
+      if valor == 4:                          #Si son 4 del mismo valor...
+        suma_cartas += 4                        #Tiene 4 cartas
+        cuenta_pares += 2                       #Suma dos pares
+        suma_puntaje += valor*4                 #Obtenemos su puntaje
+        if llave > par_alto:                    #Si su llave es el par más alto...
+          par_alto = llave                      #Guárdalo
+      if llave > carta_mas_alta and cuenta_pares == 0 and cuenta_tercias == 0: #Si esta carta es la más alta de la mano hasta ahora...
+        carta_mas_alta = llave                  #Guárdala en caso de que no tenga ni pares ni tercias
+        jg_cma = jugador                        #Y el ganador en ese caso sería este jugador
+        dict_ganador = dict_mano                #Guardemos su diccionario para después
     print("Puntaje: {} \n".format(suma_puntaje))
-    if suma_cartas == mano_ganadora:
-      lista_empate.append( [jugador, par_alto, tercia_alta, dict_mano] )
-      empate = True
-    elif suma_cartas > mano_ganadora:
-      ganador = jugador
-      max_puntaje = suma_puntaje
-      lista_empate = [ [jugador, par_alto, tercia_alta, dict_mano] ]
-      cpg = cuenta_pares
-      ctg = cuenta_tercias
-      mano_ganadora = suma_cartas
-      dict_ganador = dict_mano
-      empate = False
-  if empate == True:
-    if mano_ganadora == 0:
-      ganador = jg_cma
-    else:
-      ganador, dict_ganador = comparar_empates( lista_empate, cpg, ctg )
+    if suma_cartas == mano_ganadora:            #Si la suma de cartas es igual a la mano ganadora...
+      lista_empate.append( [jugador, par_alto, tercia_alta, dict_mano] )    #Vamos a compararlas, guardala en la lista
+      empate = True                             #Hay un empate
+    elif suma_cartas > mano_ganadora:         #Si la suma de cartas supera a la de la mano ganadora...
+      ganador = jugador                       #Este es el que va ganando
+      max_puntaje = suma_puntaje              #Su puntaje es el máximo hasta ahora
+      lista_empate = [ [jugador, par_alto, tercia_alta, dict_mano] ]    #Reescribe la lista de empate empezando por este
+      cpg = cuenta_pares                      #Aquí está su cuenta de pares
+      ctg = cuenta_tercias                    #Aquí está su cuenta de tercias
+      mano_ganadora = suma_cartas             #Su suma de cartas es la nueva ganadora
+      dict_ganador = dict_mano                #Se elige comparar suma de cartas porque puede que su puntaje sea mayor pero dos pares siempre le ganan a una tercia, por ejemplo
+      empate = False                          #Si antes había empate, ahora no.
+  if empate == True:              #Si hay empate
+    if mano_ganadora == 0:      #Y nadie va ganando...
+      ganador = jg_cma          #El de la carta más alta gana
+    else:                       #Si hay más de uno con matches
+      ganador, dict_ganador = comparar_empates( lista_empate, cpg, ctg )   #Compara las matches.
   return ganador, dict_ganador
 
 def comparar_empates( lista_empate, cpg, ctg ):
@@ -108,13 +108,13 @@ def comparar_empates( lista_empate, cpg, ctg ):
   tercia_alta = 0
   ganador = None
   dict_ganador = None
-  if cpg > ctg:
+  if cpg > ctg:           #Cantidad de Pares > Cantidad de Tercias? Tienen prioridad los pares
     for lista in lista_empate:
       if lista[1] > par_alto:
         par_alto = lista[1]
         ganador = lista[0]
         dict_ganador = lista[3]
-  else:
+  else:                  #Cantidad de Tercias >= Cantidad de Pares, tienen prioridad las tercias
     for lista in lista_empate:
       if lista[2] > tercia_alta:
         tercia_alta = lista[1]
