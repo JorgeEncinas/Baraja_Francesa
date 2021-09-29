@@ -1,5 +1,10 @@
+# IMPORTANTE
+La versión final está en la branch "final_temp"
+
 # Baraja_Francesa
 Juego de Baraja Francesa en Python
+
+Proyecto escolar, el siguiente texto son las instrucciones y los requerimientos que se dieron del programa.
 
 El siguiente programa a realizar, es un juego de baraja francesa, donde el usuario jugará contra la computadora para ver quién logra la mejor mano. Para este juego solo valdrán los pares y los tríos de cartas. El usuario iniciará el programa con el siguiente comando:
 
