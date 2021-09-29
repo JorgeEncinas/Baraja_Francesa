@@ -1,5 +1,5 @@
 # IMPORTANTE
-La versión final está en la branch "final_temp"
+La versión final ya está en la branch "master"
 
 # Baraja_Francesa
 Juego de Baraja Francesa en Python
